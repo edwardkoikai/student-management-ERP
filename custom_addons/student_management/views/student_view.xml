@@ -1,0 +1,102 @@
+<odoo>
+    <!-- Form View -->
+    <record id="view_student_form" model="ir.ui.view">
+        <field name="name">student.form</field>
+        <field name="model">student.management</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <!-- Header Section -->
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" class="oe_inline"/>
+                        </h1>
+                        <field name="profile_photo" widget="image" class="oe_avatar" options='{"preview_image": "profile_photo"}'/>
+                    </div>
+
+                    <!-- Basic Information -->
+                    <group string="Basic Information">
+                        <field name="registration_number"/>
+                        <field name="date_of_birth"/>
+                        <field name="age"/>
+                        <field name="gender"/>
+                        <field name="year_of_study"/>
+                    </group>
+
+                    <!-- Contact Information -->
+                    <group string="Contact Information">
+                        <field name="email"/>
+                        <field name="phone"/>
+                        <field name="address"/>
+                    </group>
+
+                    <!-- Guardian Information-->
+                    <group string="Guardian Information">
+                        <field name="guardian_name"/>
+                        <field name="guardian_phone"/>
+                        <field name="guardian_email"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- List (Tree) View -->
+    <record id="view_student_tree" model="ir.ui.view">
+        <field name="name">student.tree</field>
+        <field name="model">student.management</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="profile_photo" widget="image"/>
+                <field name="name"/>
+                <field name="registration_number"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="email"/>
+                <field name="year_of_study"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_student_kanban" model="ir.ui.view">
+        <field name="name">student.kanban</field>
+        <field name="model">student.management</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="profile_photo"/>
+                <field name="name"/>
+                <field name="registration_number"/>
+                <field name="gender"/>
+                <field name="year_of_study"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('student.management', 'profile_photo', record.id.raw_value)" alt="Profile Photo"/>
+                            </div>
+                            <div class="o_kanban_details">
+                                <strong><field name="name"/></strong>
+                                <div><field name="registration_number"/></div>
+                                <div><field name="gender"/></div>
+                                <div><field name="year_of_study"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Menu Items -->
+    <menuitem id="student_menu" name="Students" sequence="10"/>
+    <menuitem id="student_management_menu" name="Student Management" parent="student_menu"/>
+    <menuitem id="student_management_action" name="Manage Students" parent="student_management_menu" action="action_student_management"/>
+
+    <!-- Action -->
+    <record id="action_student_management" model="ir.actions.act_window">
+        <field name="name">Students</field>
+        <field name="res_model">student.management</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+</odoo>
